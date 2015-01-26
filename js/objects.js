@@ -30,12 +30,12 @@ console.log(twitterMessage.text);
 // code, always think: "I should write a function."
 
 function TwitterMessage(handle, text) {
-  var twitterMessage = {};
+  var tweet = {};
 
-  twitterMessage.handle = handle;
-  twitterMessage.text = text;
+  tweet.handle = handle;
+  tweet.text = text;
 
-  return twitterMessage;
+  return tweet;
 }
 
 // Let's break that down. First, you'll notice that
@@ -55,6 +55,8 @@ var tweets = [
   TwitterMessage('cdavies', 'I love C#'),
   TwitterMessage('clinton', 'I love Clojure')
 ];
+
+console.log(tweets[0].text);
 
 // So far so good? If you're lost come talk to me, and I'll
 // help you out.
@@ -84,6 +86,38 @@ function TwitterMessage2(handle, text) {
 // };
 //
 // Pretty nifty.
+
+
+// Instead of passing a huge chain of arguments in, it is
+// often handy to pass in a single argument:
+//
+// Here, spec is itself an object, and is expected to contain
+// certain properties.
+//
+// This allows you to add new arguments in the future,
+// without worrying about breaking existing callers of your
+// functions.
+function TwitterMessageWithSpec(spec) {
+  if (!spec.retweets) {
+    spec.retweets = 0;
+  }
+
+  if (!spec.userImg) {
+    spec.userImg = 'http://default.icon';
+  }
+
+  return {
+    email: spec.email,
+    handle: spec.handle,
+    text: spec.text,
+    retweets: spec.retweets,
+    userImg: spec.userImg,
+    favorites: spec.favorites
+  };
+}
+
+TwitterMessageWithSpec({ text: 'hello', handle: 'dhh', favorites: 33 });
+TwitterMessageWithSpec({ handle: 'chdavies', text: 'Hiya' });
 
 
 // Objects as dictionaries/hash-tables
@@ -135,6 +169,28 @@ console.log(twitterMessage['text']);
 //
 // That's invalid code.
 
+// Distinct takes an array and returns
+// an array with de-duplicated values
+// from the initial arr
+function distinct(arr) {
+  var result = [];
+
+  // Imagine arr has a million of items in it
+  // Filter will iterate once through array (1million operations)
+  arr.filter(function (currentValue) {
+    // result.indexOf iterates through the result array
+    // and if result array is 500,000 items long,
+    // this means we are scanning 500,000 items every
+    // time we process an item from arr
+    //
+    // That's inefficient
+    if (result.indexOf(currentValue) < 0) {
+      result.push(currentValue);
+    }
+  });
+
+  return result;
+}
 
 // ... So, when would you access an object's properties
 // using [] notation?
@@ -147,14 +203,51 @@ console.log(twitterMessage['text']);
 function distinct(array) {
   var distinctValues = {};
 
+  // This is what the following loop is doing:
+  //
+  // distinctValues.hello = true;
+  // distinctValues.world = true;
+  // distinctValues.hello = true;
+  // distinctValues.everyone = true;
+
   array.forEach(function (item) {
-    distinctValues[item] = null;
+    distinctValues[item] = true;
   });
 
   return Object.keys(distinctValues);
 }
 
 console.log(distinct(['hello', 'world', 'hello', 'everyone']));
+
+// escapeHtml finds any dangerous characters in the string str
+// and replaces them with HTML-safe characters (escaped chars)
+function escapeHtml(str) {
+  var dangerousChars = {
+    '<': '&lt;',
+    '>': '&gt;',
+    '\'': '&squot;',
+    '"': '&quot;'
+  };
+
+  var escapedArr = str.split('').map(function (char) {
+    var escapeChar = dangerousChars[char];
+    if (escapeChar === undefined) {
+      return char;
+    }
+
+    return escapeChar;
+  });
+
+  return escapedArr.join('');
+}
+
+var escapedStr = escapeHtml("<h1>hi");
+console.log(escapedStr);
+
+// given str = "<script>alert('hello')</script>"
+// this should return:
+// "&lt;script&gt;alert(&squot;hello&squot;)&lt;/script&gt;"
+
 
 // Woah! You're blowing my mind.
 //
