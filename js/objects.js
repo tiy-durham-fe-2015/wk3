@@ -75,6 +75,11 @@ function TwitterMessage2(handle, text) {
   };
 }
 
+var someOtherMessage = TwitterMessage2('cdavies', 'Hoy!');
+// someOtherMessage.handle
+// someOtherMessage.text
+
+
 // What you've just seen is called object literal notation.
 //
 // You can just create a new object, complete with properties
@@ -86,6 +91,55 @@ function TwitterMessage2(handle, text) {
 // };
 //
 // Pretty nifty.
+
+function Car(model, make, color, tireSize, trim) {
+  return {
+    model: model,
+    make: make,
+    color: color,
+    tireSize: tireSize,
+    trim: trim
+  };
+}
+
+var mySubaru = Car('Forester', 'Subaru', undefined, undefined, 'ls');
+
+function LicencePlate(spec) {
+  return {
+    state: spec.state,
+    id: spec.id
+  };
+}
+
+function Car2(spec) {
+  if (spec.tireSize === undefined) {
+    spec.tireSize = 12;
+  }
+
+  return {
+    model: spec.model,
+    make: spec.make,
+
+    // Using || like this is a handy, terse way of saying,
+    // if spec.color does not have a value, use 'grey' instead.
+    // However, if you want to support the value null or 0, then
+    // this would not work, since those evaluate to false...
+    // In that case, you would need to use the if statement above
+    color: spec.color || 'grey',
+
+    tireSize: spec.tireSize,
+    trim: spec.trim,
+    plate: spec.plate
+  };
+}
+
+var mySubaru = Car({
+  make: 'Subaru',
+  model: 'Forester',
+  trim: 'ls',
+  plate: LicencePlate({ state: 'sc' })
+});
+
 
 
 // Instead of passing a huge chain of arguments in, it is
