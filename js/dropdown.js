@@ -1,6 +1,7 @@
 (function () {
 
   var menuAction = document.querySelector('.menu-action');
+
   menuAction.addEventListener('click', function () {
     toggleClass(menuAction.parentNode, 'menu-show');
   });
@@ -15,6 +16,5 @@
       element.className += ' ' + className;
     }
   }
-
 
 })();
