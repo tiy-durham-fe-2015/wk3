@@ -50,16 +50,16 @@ console.log(wordsWithoutPunctuation);
 // Clinton give a guest lecture on them, but in the mean-
 // time, you can read more about them here:
 //
-// http://www.w3schools.com/jsref/jsref_obj_regexp.asp
+// http://codular.com/regex
 //
 // And here:
-// http://www.regular-expressions.info/quickstart.html
+// http://www.w3schools.com/jsref/jsref_obj_regexp.asp
 //
 // And play with them here:
-// http://www.w3schools.com/jsref/jsref_match.asp
-//
-// Or on jsbin here:
 // http://jsbin.com/pajorilixu/1/edit?js,console
+//
+// And here:
+// http://www.w3schools.com/jsref/jsref_match.asp
 
 
 // Another way for us to have written the previous
@@ -68,3 +68,5 @@ console.log(wordsWithoutPunctuation);
 console.log(words.match(/[A-Za-z0-9_]+/g));
 
 // And that's a bit clearer, maybe.
+// So, read up on Regex. It's handy. And crazy. But also crazy
+// handy.
